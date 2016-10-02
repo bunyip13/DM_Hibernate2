@@ -1,18 +1,14 @@
 package hibernate;
 
+import org.hibernate.*;
+import org.hibernate.cfg.Configuration;
+
 import java.io.IOException;
 import java.io.Serializable;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
-
-import org.hibernate.Query;
-import org.hibernate.SQLQuery;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
-import org.hibernate.cfg.Configuration;
 
 public class HibernateExample {
 
@@ -62,6 +58,22 @@ public class HibernateExample {
 
 			outputDatabase();
 
+
+
+			//  write example of query with join from client to account, return account list and take two parameters: name and surname.
+
+			String stringGetAccount = "SELECT accounts FROM Client AS C INNER JOIN Account AS A ON C.name = 'Roch' AND C.surname ='Kowalski'";
+			Query queryGetAccount = session.createQuery(stringGetAccount);
+			List results = queryGetAccount.list();
+			queryGetAccount.setFirstResult(1);
+			queryGetAccount.setMaxResults(10);
+
+			for (Object obj : results) {
+				Account acc = (Account) obj;
+				System.out.println(acc);
+			}
+
+
 		} catch (Throwable e) {
 			e.printStackTrace();
 		} finally {
@@ -69,6 +81,7 @@ public class HibernateExample {
 			System.exit(1);
 		}
 	}
+
 
 	private static void outputDatabase() {
 		Transaction tx = null;
