@@ -4,15 +4,24 @@
  "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping>
-<class name="hibernate.Client" table="CLIENT">
+<class name="hibernate.Client" table="CLIENT" discriminator-value="CL">
 	<id name="id" type="int">
 		<generator class="native" />
 	</id>
+
+    <discriminator column="CLIENTTYPE" type="string" />
+
 	<set name="accounts" cascade="all">
 		<key column="clientid" />
 		<one-to-many class="hibernate.Account" />
 	</set>
 	<property name="name" type="string" />
 	<property name="surname" type="string" />
+
+	<subclass name="hibernate.RegularClient" discriminator-value="RCLIENT">
+		<property name="pet" column="PET" />
+		<property name="age" column="AGE" />
+	</subclass>
+
 </class>
 </hibernate-mapping>

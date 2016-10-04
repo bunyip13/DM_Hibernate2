@@ -1,21 +1,31 @@
 package hibernate;
 
-import javax.persistence.Entity;
+//import javax.persistence.Entity;
+
+import javax.persistence.*;
 
 @Entity
 public class RegularClient extends Client {
-    private String name;
+    private String pet;
+    private Integer age;
 
     public RegularClient() {
     }
 
-    @Override
-    public String getName() {
-        return name;
+    public String getPet() {
+        return pet;
     }
 
-    @Override
-    public void setName(String name) {
-        this.name = name;
+    public void setPet(String pet) {
+        this.pet = pet;
     }
+
+    public Integer getAge() {
+        return age;
+    }
+
+    public void setAge(Integer age) {
+        this.age = age;
+    }
+
 }

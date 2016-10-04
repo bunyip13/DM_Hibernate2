@@ -1,13 +1,9 @@
 package hibernate;
 
-import javax.persistence.Entity;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
+import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
-@Entity
-@Inheritance(strategy= InheritanceType.JOINED)
 public class Client {
 	private Integer id;
 	private Set<Account> accounts = new HashSet<>();
