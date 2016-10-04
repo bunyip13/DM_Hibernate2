@@ -61,35 +61,32 @@ public class HibernateExample {
 			newAcc3.setAmount(10500L);
 			newAcc3.setIban("L512 1111");
 
+			Account newAcc4 = new Account();
+			newAcc4.setAmount(100L);
+			newAcc4.setIban("LT12 1121");
+
 			RegularClient rclient = new RegularClient();
 			rclient.setName("Roch");
 			rclient.setSurname("Kowalski");
 			rclient.getAccounts().add(newAcc3);
+			rclient.getAccounts().add(newAcc4);
 			rclient.setPet("Dog");
 			rclient.setAge(30);
 
 			session.save(rclient);
-
-
-
 			tx.commit();
-
-			System.out.println();
-			System.out.println("First output");
-
+//
+//			System.out.println();
+//			System.out.println("First output");
 //			outputDatabase();
 
 			tx = session.beginTransaction();
 			client.setName("Name 2");
 			tx.commit();
 
-
-			System.out.println();
-			System.out.println("Sec output");
-
+//			System.out.println();
+//			System.out.println("Sec output");
 //			outputDatabase();
-
-
 
 			tx = session.beginTransaction();
 			// managed object
@@ -109,9 +106,10 @@ public class HibernateExample {
 						 "FROM hibernate.Client client " +
 						 "WHERE client.name = :name " +
 						 "AND client.surname = :surname";
+
 			Query query = session.createQuery(hql);
-			query.setParameter("name", "Name 2");
-			query.setParameter("surname", "Surname");
+			query.setParameter("name", "Roch");
+			query.setParameter("surname", "Kowalski");
 			List<?> results = query.list();
 			results.forEach(System.out::println);
 
@@ -119,7 +117,7 @@ public class HibernateExample {
 			e.printStackTrace();
 		} finally {
 			session.close();
-//			System.exit(1);
+			System.exit(1);
 		}
 	}
 
@@ -140,23 +138,6 @@ public class HibernateExample {
 				results.forEach(System.out::println);
 				System.out.println();
 			}
-
-			tx.commit();
-		} finally {
-			session.close();
-		}
-	}
-
-	private static void outputDatabase2() {
-		Transaction tx;
-		Session session = factory.openSession();
-		try {
-			// begin transaction
-			tx = session.beginTransaction();
-			String stringGetAccount = "SELECT accounts FROM Client AS C INNER JOIN Account AS A ON C.name = 'Roch' AND C.surname ='Kowalski'";
-			Query query1 = session.createQuery(stringGetAccount);
-			List<?> results = query1.list();
-			results.forEach(System.out::println);
 
 			tx.commit();
 		} finally {
